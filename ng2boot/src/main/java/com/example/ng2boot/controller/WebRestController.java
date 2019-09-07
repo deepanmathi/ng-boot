@@ -1,23 +1,31 @@
 package com.example.ng2boot.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.ng2boot.model.User;
- 
-//@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+import com.example.ng2boot.entity.Course;
+import com.example.ng2boot.entity.Student;
+import com.example.ng2boot.service.StudentService;
+
 @RestController
 public class WebRestController {
-	
-	 @RequestMapping("/api/hi")
-	  public ArrayList<User> hi() {
-		 System.out.println("in");
-		 ArrayList<User> list=new ArrayList<User>();
-		 list.add(new User("1", "deepan", "khgjhg", "jgfjj"));
+
+	private StudentService studServ;
+
+	public WebRestController(StudentService theStudServ) {
+		this.studServ = theStudServ;
+	}
+
+	@GetMapping(path = "/api/courses/{stuId}")
+	public ArrayList<Course> getFindEmploy(@PathVariable int stuId) {
+		ArrayList<Course> list = new ArrayList<Course>();
+		Student std=studServ.getCourses(stuId);
+		if(std!=null) {
+			list.addAll(std.getCourses());
+		}
 		return list;
-	  }
+	}
 }

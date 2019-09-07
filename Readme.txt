@@ -1,0 +1,1 @@
+bundled spring boot and angular with hibernate many to many
